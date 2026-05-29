@@ -8,7 +8,9 @@
     <link rel="icon" type="image/png" href="icons/icon32.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #080c14;
@@ -31,7 +33,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.18) 0px, transparent 50%),
                 radial-gradient(at 50% 50%, rgba(56, 189, 248, 0.05) 0px, transparent 60%);
@@ -40,7 +42,10 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
         }
@@ -183,9 +188,17 @@
             border-radius: 50%;
         }
 
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #eab308; }
-        .dot-green { background: #22c55e; }
+        .dot-red {
+            background: #ef4444;
+        }
+
+        .dot-yellow {
+            background: #eab308;
+        }
+
+        .dot-green {
+            background: #22c55e;
+        }
 
         .window-title {
             font-size: 13px;
@@ -304,6 +317,7 @@
                 opacity: 0;
                 transform: translateY(-8px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -545,23 +559,78 @@
             margin-top: 100px;
         }
 
-        .footer-text {
-            margin-bottom: 10px;
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 4px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
         }
 
-        .footer-developer {
-            color: #38bdf8;
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         /* Responsive Settings */
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .developer-badge {
+                display: none;
+            }
+
             .hero-title {
                 font-size: 44px;
             }
+
             .hero-subtitle {
                 font-size: 17px;
             }
+
             .section-title {
                 font-size: 32px;
             }
@@ -571,12 +640,18 @@
 
 <body>
     <header>
-        <a href="#" class="logo" style="display: flex; align-items: center; gap: 10px;">
-            <img src="icons/icon32.png" alt="Inline Translator Logo" style="width: 32px; height: 32px; border-radius: 8px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);">
+        <a href="#home" class="logo" style="display: flex; align-items: center; gap: 10px;" onclick="switchTab('home', event)">
+            <img src="icons/icon32.png" alt="Inline Translator Logo"
+                style="width: 32px; height: 32px; border-radius: 8px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);">
             <span>Inline Translator</span>
         </a>
+        <nav class="nav-links">
+            <a href="#home" class="nav-link active" onclick="switchTab('home', event)">Home</a>
+            <a href="#privacy" class="nav-link" onclick="switchTab('privacy', event)">Privacy Policy</a>
+        </nav>
         <div class="developer-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
             <span>Developed by Gihan S Gamage</span>
@@ -584,11 +659,16 @@
     </header>
 
     <main class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 class="hero-title">Translate the Web<br><span class="gradient-text">Organically and Instantly</span></h1>
-            <p class="hero-subtitle">Experience seamless inline translation powered by Google Translate. Perfectly integrates translations directly inside headings, paragraphs, buttons, and tables without distorting page layouts.</p>
-            <a href="https://chromewebstore.google.com/" target="_blank" class="btn-large" id="installBtn">Add to Browser</a>
+        <div id="home-tab" class="tab-content active">
+            <!-- Hero Section -->
+            <section class="hero">
+            <h1 class="hero-title">Translate the Web<br><span class="gradient-text">Organically and Instantly</span>
+            </h1>
+            <p class="hero-subtitle">Experience seamless inline translation powered by Google Translate. Perfectly
+                integrates translations directly inside headings, paragraphs, buttons, and tables without distorting
+                page layouts.</p>
+            <a href="https://chromewebstore.google.com/" target="_blank" class="btn-large" id="installBtn">Add to
+                Browser</a>
 
             <!-- Demo Interactive Window -->
             <div class="demo-window">
@@ -600,8 +680,10 @@
                         <span class="window-title">Interactive Translation Simulator</span>
                     </div>
                     <div class="header-actions">
-                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('success')">Simulate Success Toast</button>
-                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('error')">Simulate Error Toast</button>
+                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('success')">Simulate Success
+                            Toast</button>
+                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('error')">Simulate Error
+                            Toast</button>
                     </div>
                 </div>
                 <div class="window-content">
@@ -618,12 +700,17 @@
                     </div>
 
                     <div class="demo-element">
-                        <h2 style="font-size: 22px; margin-bottom: 6px;" class="original-text translated-parent" id="demo-h2">DeepL API (best quality)</h2>
+                        <h2 style="font-size: 22px; margin-bottom: 6px;" class="original-text translated-parent"
+                            id="demo-h2">DeepL API (best quality)</h2>
                         <span id="trans-h2"><span class="demo-translation-title">DeepL API (හොඳම ගුණාත්මක)</span></span>
                     </div>
                     <div class="demo-element" style="margin-bottom: 0;">
-                        <p class="original-text translated-parent" id="demo-p">Inline Translator automatically detects page structural items and injects clean translation blocks inside parent containers. Layout formatting remains fully intact.</p>
-                        <span id="trans-p"><span class="demo-translation">Inline Translator ස්වයංක්‍රීයව පිටු ව්‍යුහාත්මක අයිතම හඳුනාගෙන මාපිය බහාලුම් තුළ පිරිසිදු පරිවර්තන කොටස් ඇතුල් කරයි. පිරිසැලසුම් හැඩතල ගැන්වීම සම්පූර්ණයෙන්ම නොවෙනස්ව පවතී.</span></span>
+                        <p class="original-text translated-parent" id="demo-p">Inline Translator automatically detects
+                            page structural items and injects clean translation blocks inside parent containers. Layout
+                            formatting remains fully intact.</p>
+                        <span id="trans-p"><span class="demo-translation">Inline Translator ස්වයංක්‍රීයව පිටු
+                                ව්‍යුහාත්මක අයිතම හඳුනාගෙන මාපිය බහාලුම් තුළ පිරිසිදු පරිවර්තන කොටස් ඇතුල් කරයි.
+                                පිරිසැලසුම් හැඩතල ගැන්වීම සම්පූර්ණයෙන්ම නොවෙනස්ව පවතී.</span></span>
                     </div>
                 </div>
             </div>
@@ -632,81 +719,102 @@
         <!-- Features Grid -->
         <section class="features">
             <h2 class="section-title">State-of-the-Art Features</h2>
-            <p class="section-subtitle">Engineered for dynamic web platforms with zero compromises on browser responsiveness or performance.</p>
+            <p class="section-subtitle">Engineered for dynamic web platforms with zero compromises on browser
+                responsiveness or performance.</p>
             <div class="grid">
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
                     </div>
                     <h3 class="card-title">Style Inheritance</h3>
-                    <p class="card-desc">Translations are injected using block span nodes that cleanly inherit 100% of the parent typography. Keeps font sizes, colors, spacing, and bold/italic styling completely natural.</p>
+                    <p class="card-desc">Translations are injected using block span nodes that cleanly inherit 100% of
+                        the parent typography. Keeps font sizes, colors, spacing, and bold/italic styling completely
+                        natural.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="8" x2="12" y2="12"></line>
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
                     </div>
                     <h3 class="card-title">Double-Translation Guard</h3>
-                    <p class="card-desc">Features node structural checks that prevent translated spans from being re-processed. Stops duplicated translation overlays from repeating inside bullet points or nested lists.</p>
+                    <p class="card-desc">Features node structural checks that prevent translated spans from being
+                        re-processed. Stops duplicated translation overlays from repeating inside bullet points or
+                        nested lists.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                         </svg>
                     </div>
                     <h3 class="card-title">O(N) TreeWalker Engine</h3>
-                    <p class="card-desc">Traverses the browser DOM structure in linear time to isolate absolute text leaf node containers. Safely parses heavy Single Page Apps (SPAs) like LinkedIn update elements with ease.</p>
+                    <p class="card-desc">Traverses the browser DOM structure in linear time to isolate absolute text
+                        leaf node containers. Safely parses heavy Single Page Apps (SPAs) like LinkedIn update elements
+                        with ease.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M23 4v6h-6"></path>
                             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                         </svg>
                     </div>
                     <h3 class="card-title">Debounced Mutation Queue</h3>
-                    <p class="card-desc">Optimally batches high-frequency DOM shifts with a 150ms timeout. Gracefully monitors infinite feed scrolls and "...more" click reveals without page unresponsive lags.</p>
+                    <p class="card-desc">Optimally batches high-frequency DOM shifts with a 150ms timeout. Gracefully
+                        monitors infinite feed scrolls and "...more" click reveals without page unresponsive lags.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
                     </div>
                     <h3 class="card-title">Keyless API Connection</h3>
-                    <p class="card-desc">Utilizes Google Translate's high-speed public endpoint to translate pages. Does not require paid accounts, external configuration, or private API keys to operate.</p>
+                    <p class="card-desc">Utilizes Google Translate's high-speed public endpoint to translate pages. Does
+                        not require paid accounts, external configuration, or private API keys to operate.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
                             <line x1="12" y1="4" x2="12" y2="20"></line>
                         </svg>
                     </div>
                     <h3 class="card-title">Scroll Anchoring</h3>
-                    <p class="card-desc">Protects reading continuity. The extension monitors document heights and performs scroll adjustments to offset injected blocks, preventing annoying page jumps and layout jittering.</p>
+                    <p class="card-desc">Protects reading continuity. The extension monitors document heights and
+                        performs scroll adjustments to offset injected blocks, preventing annoying page jumps and layout
+                        jittering.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
                             <line x1="6" y1="8" x2="6.01" y2="8"></line>
                             <line x1="10" y1="8" x2="14" y2="8"></line>
                         </svg>
                     </div>
                     <h3 class="card-title">Keyboard Command Toggle</h3>
-                    <p class="card-desc">Features immediate keyboard command execution. Press Command + Shift + Y (Mac) or Ctrl + Shift + Y (Windows) to instantly execute translation runs or clear active translation blocks.</p>
+                    <p class="card-desc">Features immediate keyboard command execution. Press Command + Shift + Y (Mac)
+                        or Ctrl + Shift + Y (Windows) to instantly execute translation runs or clear active translation
+                        blocks.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="9" y1="21" x2="9" y2="9"></line>
                             <line x1="9" y1="15" x2="21" y2="15"></line>
@@ -714,7 +822,9 @@
                         </svg>
                     </div>
                     <h3 class="card-title">Interactive Elements</h3>
-                    <p class="card-desc">Translates button text labels and form input details safely. Keeps hover transitions, clicking animations, and active state triggers functioning beautifully inside the page design.</p>
+                    <p class="card-desc">Translates button text labels and form input details safely. Keeps hover
+                        transitions, clicking animations, and active state triggers functioning beautifully inside the
+                        page design.</p>
                 </div>
             </div>
         </section>
@@ -722,15 +832,21 @@
         <!-- Complete User Guide -->
         <section class="how-it-works">
             <h2 class="section-title">Complete User Guide</h2>
-            <p class="section-subtitle">Follow these instructions to install, configure, and operate the Inline Translator extension.</p>
+            <p class="section-subtitle">Follow these instructions to install, configure, and operate the Inline
+                Translator extension.</p>
             <div class="steps">
                 <div class="step">
                     <div class="step-num">1</div>
                     <div class="step-content">
                         <h3 style="margin-bottom: 8px; color: #38bdf8;">How to Install the Extension</h3>
-                        <p style="margin-bottom: 12px;">Install the official extension directly from the Chrome Web Store:</p>
-                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
-                            <li>Click the <strong>Add to Browser</strong> button at the top of this page or navigate directly to the <a href="https://chromewebstore.google.com/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Chrome Web Store</a>.</li>
+                        <p style="margin-bottom: 12px;">Install the official extension directly from the Chrome Web
+                            Store:</p>
+                        <ul
+                            style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>Click the <strong>Add to Browser</strong> button at the top of this page or navigate
+                                directly to the <a href="https://chromewebstore.google.com/" target="_blank"
+                                    style="color: #38bdf8; text-decoration: none; font-weight: 500;">Chrome Web
+                                    Store</a>.</li>
                             <li>Search for <strong>Inline Translator</strong> in the store search bar.</li>
                             <li>Click the <strong>Add to Chrome</strong> button on the extension page.</li>
                             <li>Confirm the installation permission dialog when prompted to complete the setup.</li>
@@ -741,11 +857,15 @@
                     <div class="step-num">2</div>
                     <div class="step-content">
                         <h3 style="margin-bottom: 8px; color: #38bdf8;">Selecting a Target Language</h3>
-                        <p style="margin-bottom: 12px;">Configure the target language that you want page elements translated into:</p>
-                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
-                            <li>Click the <strong>Inline Translator</strong> jigsaw piece or pin icon in the browser toolbar to launch the popup panel.</li>
+                        <p style="margin-bottom: 12px;">Configure the target language that you want page elements
+                            translated into:</p>
+                        <ul
+                            style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>Click the <strong>Inline Translator</strong> jigsaw piece or pin icon in the browser
+                                toolbar to launch the popup panel.</li>
                             <li>Click the <strong>Target Language</strong> selector dropdown.</li>
-                            <li>Choose from over 85 globally supported languages. The active page translation will automatically default to your choice.</li>
+                            <li>Choose from over 85 globally supported languages. The active page translation will
+                                automatically default to your choice.</li>
                         </ul>
                     </div>
                 </div>
@@ -753,11 +873,14 @@
                     <div class="step-num">3</div>
                     <div class="step-content">
                         <h3 style="margin-bottom: 8px; color: #38bdf8;">Setting a Primary Language</h3>
-                        <p style="margin-bottom: 12px;">Save a default target language so you do not have to select it every time:</p>
-                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                        <p style="margin-bottom: 12px;">Save a default target language so you do not have to select it
+                            every time:</p>
+                        <ul
+                            style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
                             <li>Open the extension popup and pick your preferred language from the selector.</li>
                             <li>Tick the <strong>Set as Primary Language</strong> checkbox.</li>
-                            <li>The selection is saved instantly in your browser's local sandbox storage, configuring it as the default target language for all new runs.</li>
+                            <li>The selection is saved instantly in your browser's local sandbox storage, configuring it
+                                as the default target language for all new runs.</li>
                         </ul>
                     </div>
                 </div>
@@ -765,24 +888,89 @@
                     <div class="step-num">4</div>
                     <div class="step-content">
                         <h3 style="margin-bottom: 8px; color: #38bdf8;">Using Keyboard Shortcuts</h3>
-                        <p style="margin-bottom: 12px;">Trigger or toggle translations using convenient custom key combinations:</p>
-                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                        <p style="margin-bottom: 12px;">Trigger or toggle translations using convenient custom key
+                            combinations:</p>
+                        <ul
+                            style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
                             <li>To translate the current tab instantly with your stored primary language, press:
                                 <div style="margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap;">
-                                    <span style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
-                                        macOS: <kbd style="font-family: inherit; font-weight: 600; color: #38bdf8;">⌘ + Shift + Y</kbd>
+                                    <span
+                                        style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
+                                        macOS: <kbd style="font-family: inherit; font-weight: 600; color: #38bdf8;">⌘ +
+                                            Shift + Y</kbd>
                                     </span>
-                                    <span style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
-                                        Windows / Linux: <kbd style="font-family: inherit; font-weight: 600; color: #a855f7;">Ctrl + Shift + Y</kbd>
+                                    <span
+                                        style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
+                                        Windows / Linux: <kbd
+                                            style="font-family: inherit; font-weight: 600; color: #a855f7;">Ctrl + Shift
+                                            + Y</kbd>
                                     </span>
                                 </div>
                             </li>
-                            <li>Press the key combination a second time on any active translation run to instantly clear the inline blocks and restore the original web view layout.</li>
+                            <li>Press the key combination a second time on any active translation run to instantly clear
+                                the inline blocks and restore the original web view layout.</li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Privacy Policy Tab -->
+        <div id="privacy-tab" class="tab-content" style="padding: 60px 0;">
+            <div class="privacy-container" style="max-width: 800px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 40px; backdrop-filter: blur(12px); box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);">
+                <h1 class="gradient-text" style="font-size: 38px; margin-bottom: 10px; text-align: left;">Privacy Policy</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 15px;">Last Updated: May 29, 2026</p>
+                
+                <div class="privacy-content" style="color: #cbd5e1; font-size: 15px; line-height: 1.7; display: flex; flex-direction: column; gap: 24px;">
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">1. Introduction</h3>
+                        <p>Welcome to <strong>Inline Translator</strong>. We respect your privacy and are committed to protecting any information processed while you use our browser extension. This Privacy Policy explains our practices regarding data, permissions, and third-party services.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">2. Data Collection & Transmission</h3>
+                        <p><strong>We do not collect, store, or transmit your personal data.</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; list-style-type: disc;">
+                            <li><strong>No Personal Information:</strong> We do not require account registration or profiles. We never collect names, email addresses, or payment details.</li>
+                            <li><strong>No Tracking:</strong> The extension does not record, track, or upload your web browsing history, search terms, or visited URLs to external servers.</li>
+                            <li><strong>Dynamic Processing:</strong> Selected web text is sent securely from your browser directly to Google Translate's public translation endpoint solely to perform immediate translation. No intermediate servers are used, and no text is logged.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">3. Storage and Settings</h3>
+                        <p>All settings and configuration profiles (such as your chosen primary language) are stored <strong>locally</strong> on your physical device using your browser's sandboxed storage (<code>chrome.storage.local</code>). We have no access to this data, and it is never synchronized with external servers or cloud services.</p>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">4. Extension Permissions</h3>
+                        <p>To provide organic inline translation, the extension requires the following browser permissions:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; list-style-type: disc;">
+                            <li><strong>activeTab / Scripting:</strong> Utilized strictly to inject the translator scripts into the active page DOM to locate structural text nodes and render clean inline translation spans.</li>
+                            <li><strong>storage:</strong> Used to save your primary language choice locally inside your web browser.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">5. Third-Party Services</h3>
+                        <p>Our extension connects directly to Google Translate API services to fulfill translation requests. When text is translated, Google's privacy protocols apply. We encourage you to read Google's official privacy statement regarding their translation endpoints.</p>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #f8fafc; font-size: 20px; margin-bottom: 8px;">6. Policy Updates</h3>
+                        <p>We may update this Privacy Policy periodically. If any changes are made, the "Last Updated" date at the top of this document will be modified. All updates are effective immediately upon publishing to this web page.</p>
+                    </div>
+
+                    <div style="margin-top: 15px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                        <div>
+                            <h3 style="color: #f8fafc; font-size: 18px; margin-bottom: 4px;">Questions or Feedback?</h3>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Contact the developer regarding the extension's privacy practices.</p>
+                        </div>
+                        <a href="https://github.com/gihansgamage" target="_blank" class="btn-large" style="padding: 10px 24px; font-size: 14px; border-radius: 10px; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.25);">Contact Developer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Simulated Toasts container -->
@@ -790,6 +978,11 @@
 
     <footer>
         <div class="container">
+            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
+                <a href="#home" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onclick="switchTab('home', event)" onmouseover="this.style.color='#f8fafc'" onmouseout="this.style.color='var(--text-secondary)'">Home</a>
+                <span style="color: rgba(255,255,255,0.15)">•</span>
+                <a href="#privacy" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onclick="switchTab('privacy', event)" onmouseover="this.style.color='#f8fafc'" onmouseout="this.style.color='var(--text-secondary)'">Privacy Policy</a>
+            </div>
             <p class="footer-text">© 2026 Inline Translator. All rights reserved.</p>
             <p class="footer-text">Developed with excellence by <span class="footer-developer">Gihan S Gamage</span></p>
         </div>
@@ -887,6 +1080,60 @@
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 350);
         }
+
+        // Tab switching logic
+        function switchTab(tabId, event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            const homeTab = document.getElementById('home-tab');
+            const privacyTab = document.getElementById('privacy-tab');
+            
+            if (!homeTab || !privacyTab) return;
+
+            if (tabId === 'privacy') {
+                homeTab.classList.remove('active');
+                privacyTab.classList.add('active');
+            } else {
+                privacyTab.classList.remove('active');
+                homeTab.classList.add('active');
+            }
+
+            // Update nav links active styling
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + tabId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Update URL hash smoothly without jump
+            if (window.location.hash !== '#' + tabId) {
+                history.pushState(null, null, '#' + tabId);
+            }
+
+            // Scroll cleanly to top of page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Deep linking and direct navigation hash handlers
+        function handleHashRoute() {
+            const hash = window.location.hash;
+            if (hash === '#privacy') {
+                switchTab('privacy');
+            } else {
+                switchTab('home');
+            }
+        }
+
+        // Run routing immediately on load
+        handleHashRoute();
+
+        // Run routing on hash change
+        window.addEventListener('hashchange', handleHashRoute);
 
     </script>
 </body>
