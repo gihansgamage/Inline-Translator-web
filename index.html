@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Translator - Instant Organic Translations</title>
+    <link rel="icon" type="image/png" href="icons/icon32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080c14;
+            --card-bg: rgba(17, 24, 39, 0.45);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --accent-primary: #6366f1;
+            --accent-secondary: #a855f7;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --toast-success-bg: #10b981;
+            --toast-error-bg: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.18) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(56, 189, 248, 0.05) 0px, transparent 60%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.8px;
+        }
+
+        .developer-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: rgba(99, 102, 241, 0.08);
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+            font-weight: 800;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 40%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            max-width: 720px;
+            margin: 0 auto 40px auto;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .btn-large {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.45);
+            filter: brightness(1.15);
+        }
+
+        /* Demo Interactive Window */
+        .demo-window {
+            margin: 50px auto 0 auto;
+            max-width: 850px;
+            background: #0d121f;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.05);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .window-header {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #eab308; }
+        .dot-green { background: #22c55e; }
+
+        .window-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-left: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-toast-trigger {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #38bdf8;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-toast-trigger:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: #38bdf8;
+        }
+
+        .window-content {
+            padding: 35px;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.03), transparent);
+        }
+
+        /* Interactive Simulator Chips */
+        .simulator-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            align-items: center;
+        }
+
+        .control-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chip:hover {
+            color: var(--text-primary);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .chip.active {
+            color: #ffffff;
+            border-color: var(--accent-primary);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .demo-element {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .original-text {
+            color: #cbd5e1;
+            transition: color 0.3s;
+        }
+
+        .original-text.translated-parent {
+            color: #94a3b8;
+        }
+
+        .demo-translation {
+            display: block;
+            color: #818cf8;
+            margin-top: 6px;
+            font-size: 15px;
+            line-height: 1.6;
+            transform-origin: top;
+            animation: slideInDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .demo-translation-title {
+            display: block;
+            color: #a855f7;
+            font-weight: 700;
+            margin-top: 4px;
+            animation: slideInDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 17px;
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 35px 30px;
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(99, 102, 241, 0.05);
+            background: rgba(21, 28, 47, 0.7);
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #38bdf8;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background: rgba(99, 102, 241, 0.25);
+            color: #a855f7;
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        /* How it works */
+        .how-it-works {
+            padding: 100px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 24px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .step-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.05);
+        }
+
+        .step-content h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Floating Toast Container */
+        #simulated-toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 360px;
+            pointer-events: none;
+        }
+
+        .simulated-toast {
+            pointer-events: auto;
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 20px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .simulated-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #f8fafc;
+        }
+
+        .toast-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .indicator-success {
+            background-color: var(--toast-success-bg);
+            box-shadow: 0 0 8px var(--toast-success-bg);
+        }
+
+        .indicator-error {
+            background-color: var(--toast-error-bg);
+            box-shadow: 0 0 8px var(--toast-error-bg);
+        }
+
+        .toast-close {
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .toast-close:hover {
+            color: var(--text-primary);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: #06090e;
+            padding: 50px 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 100px;
+        }
+
+        .footer-text {
+            margin-bottom: 10px;
+        }
+
+        .footer-developer {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 44px;
+            }
+            .hero-subtitle {
+                font-size: 17px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="#" class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <img src="icons/icon32.png" alt="Inline Translator Logo" style="width: 32px; height: 32px; border-radius: 8px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);">
+            <span>Inline Translator</span>
+        </a>
+        <div class="developer-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span>Developed by Gihan S Gamage</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Translate the Web<br><span class="gradient-text">Organically and Instantly</span></h1>
+            <p class="hero-subtitle">Experience seamless inline translation powered by Google Translate. Perfectly integrates translations directly inside headings, paragraphs, buttons, and tables without distorting page layouts.</p>
+            <a href="https://chromewebstore.google.com/" target="_blank" class="btn-large" id="installBtn">Add to Browser</a>
+
+            <!-- Demo Interactive Window -->
+            <div class="demo-window">
+                <div class="window-header">
+                    <div class="header-left">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                        <span class="window-title">Interactive Translation Simulator</span>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('success')">Simulate Success Toast</button>
+                        <button class="btn-toast-trigger" onclick="triggerSimulatedToast('error')">Simulate Error Toast</button>
+                    </div>
+                </div>
+                <div class="window-content">
+                    <!-- Simulator Language Chips -->
+                    <div class="simulator-controls">
+                        <span class="control-label">Select Target Language:</span>
+                        <button class="chip" onclick="switchLanguage('original', this)">Original</button>
+                        <button class="chip active" onclick="switchLanguage('si', this)">සිංහල (Sinhala)</button>
+                        <button class="chip" onclick="switchLanguage('es', this)">Español (Spanish)</button>
+                        <button class="chip" onclick="switchLanguage('fr', this)">Français (French)</button>
+                        <button class="chip" onclick="switchLanguage('ja', this)">日本語 (Japanese)</button>
+                        <button class="chip" onclick="switchLanguage('de', this)">Deutsch (German)</button>
+                        <button class="chip" onclick="switchLanguage('zh', this)">中文 (Chinese)</button>
+                    </div>
+
+                    <div class="demo-element">
+                        <h2 style="font-size: 22px; margin-bottom: 6px;" class="original-text translated-parent" id="demo-h2">DeepL API (best quality)</h2>
+                        <span id="trans-h2"><span class="demo-translation-title">DeepL API (හොඳම ගුණාත්මක)</span></span>
+                    </div>
+                    <div class="demo-element" style="margin-bottom: 0;">
+                        <p class="original-text translated-parent" id="demo-p">Inline Translator automatically detects page structural items and injects clean translation blocks inside parent containers. Layout formatting remains fully intact.</p>
+                        <span id="trans-p"><span class="demo-translation">Inline Translator ස්වයංක්‍රීයව පිටු ව්‍යුහාත්මක අයිතම හඳුනාගෙන මාපිය බහාලුම් තුළ පිරිසිදු පරිවර්තන කොටස් ඇතුල් කරයි. පිරිසැලසුම් හැඩතල ගැන්වීම සම්පූර්ණයෙන්ම නොවෙනස්ව පවතී.</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="features">
+            <h2 class="section-title">State-of-the-Art Features</h2>
+            <p class="section-subtitle">Engineered for dynamic web platforms with zero compromises on browser responsiveness or performance.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Style Inheritance</h3>
+                    <p class="card-desc">Translations are injected using block span nodes that cleanly inherit 100% of the parent typography. Keeps font sizes, colors, spacing, and bold/italic styling completely natural.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Double-Translation Guard</h3>
+                    <p class="card-desc">Features node structural checks that prevent translated spans from being re-processed. Stops duplicated translation overlays from repeating inside bullet points or nested lists.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">O(N) TreeWalker Engine</h3>
+                    <p class="card-desc">Traverses the browser DOM structure in linear time to isolate absolute text leaf node containers. Safely parses heavy Single Page Apps (SPAs) like LinkedIn update elements with ease.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Debounced Mutation Queue</h3>
+                    <p class="card-desc">Optimally batches high-frequency DOM shifts with a 150ms timeout. Gracefully monitors infinite feed scrolls and "...more" click reveals without page unresponsive lags.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Keyless API Connection</h3>
+                    <p class="card-desc">Utilizes Google Translate's high-speed public endpoint to translate pages. Does not require paid accounts, external configuration, or private API keys to operate.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                            <line x1="12" y1="4" x2="12" y2="20"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Scroll Anchoring</h3>
+                    <p class="card-desc">Protects reading continuity. The extension monitors document heights and performs scroll adjustments to offset injected blocks, preventing annoying page jumps and layout jittering.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                            <line x1="6" y1="8" x2="6.01" y2="8"></line>
+                            <line x1="10" y1="8" x2="14" y2="8"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Keyboard Command Toggle</h3>
+                    <p class="card-desc">Features immediate keyboard command execution. Press Command + Shift + Y (Mac) or Ctrl + Shift + Y (Windows) to instantly execute translation runs or clear active translation blocks.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                            <line x1="9" y1="15" x2="21" y2="15"></line>
+                            <line x1="9" y1="9" x2="21" y2="9"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Interactive Elements</h3>
+                    <p class="card-desc">Translates button text labels and form input details safely. Keeps hover transitions, clicking animations, and active state triggers functioning beautifully inside the page design.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complete User Guide -->
+        <section class="how-it-works">
+            <h2 class="section-title">Complete User Guide</h2>
+            <p class="section-subtitle">Follow these instructions to install, configure, and operate the Inline Translator extension.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h3 style="margin-bottom: 8px; color: #38bdf8;">How to Install the Extension</h3>
+                        <p style="margin-bottom: 12px;">Install the official extension directly from the Chrome Web Store:</p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>Click the <strong>Add to Browser</strong> button at the top of this page or navigate directly to the <a href="https://chromewebstore.google.com/" target="_blank" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Chrome Web Store</a>.</li>
+                            <li>Search for <strong>Inline Translator</strong> in the store search bar.</li>
+                            <li>Click the <strong>Add to Chrome</strong> button on the extension page.</li>
+                            <li>Confirm the installation permission dialog when prompted to complete the setup.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3 style="margin-bottom: 8px; color: #38bdf8;">Selecting a Target Language</h3>
+                        <p style="margin-bottom: 12px;">Configure the target language that you want page elements translated into:</p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>Click the <strong>Inline Translator</strong> jigsaw piece or pin icon in the browser toolbar to launch the popup panel.</li>
+                            <li>Click the <strong>Target Language</strong> selector dropdown.</li>
+                            <li>Choose from over 85 globally supported languages. The active page translation will automatically default to your choice.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3 style="margin-bottom: 8px; color: #38bdf8;">Setting a Primary Language</h3>
+                        <p style="margin-bottom: 12px;">Save a default target language so you do not have to select it every time:</p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>Open the extension popup and pick your preferred language from the selector.</li>
+                            <li>Tick the <strong>Set as Primary Language</strong> checkbox.</li>
+                            <li>The selection is saved instantly in your browser's local sandbox storage, configuring it as the default target language for all new runs.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h3 style="margin-bottom: 8px; color: #38bdf8;">Using Keyboard Shortcuts</h3>
+                        <p style="margin-bottom: 12px;">Trigger or toggle translations using convenient custom key combinations:</p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); font-size: 14.5px; list-style-type: disc; display: flex; flex-direction: column; gap: 8px;">
+                            <li>To translate the current tab instantly with your stored primary language, press:
+                                <div style="margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <span style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
+                                        macOS: <kbd style="font-family: inherit; font-weight: 600; color: #38bdf8;">⌘ + Shift + Y</kbd>
+                                    </span>
+                                    <span style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); padding: 4px 10px; border-radius: 6px; color: #f8fafc; font-size: 13.5px; font-weight: 500;">
+                                        Windows / Linux: <kbd style="font-family: inherit; font-weight: 600; color: #a855f7;">Ctrl + Shift + Y</kbd>
+                                    </span>
+                                </div>
+                            </li>
+                            <li>Press the key combination a second time on any active translation run to instantly clear the inline blocks and restore the original web view layout.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Simulated Toasts container -->
+    <div id="simulated-toast-container"></div>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">© 2026 Inline Translator. All rights reserved.</p>
+            <p class="footer-text">Developed with excellence by <span class="footer-developer">Gihan S Gamage</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Simulator Language Dictionary
+        const translations = {
+            si: {
+                h2: "DeepL API (හොඳම ගුණාත්මක)",
+                p: "Inline Translator ස්වයංක්‍රීයව පිටු ව්‍යුහාත්මක අයිතම හඳුනාගෙන මාපිය බහාලුම් තුළ පිරිසිදු පරිවර්තන කොටස් ඇතුල් කරයි. පිරිසැලසුම් හැඩතල ගැන්වීම සම්පූර්ණයෙන්ම නොවෙනස්ව පවතී."
+            },
+            es: {
+                h2: "API de DeepL (mejor calidad)",
+                p: "Inline Translator detecta automáticamente los elementos estructurales de la página e inyecta bloques de traducción limpios dentro de los contenedores principales. El formato del diseño permanece completamente intacto."
+            },
+            fr: {
+                h2: "API DeepL (meilleure qualité)",
+                p: "Inline Translator détecte automatiquement les éléments structurels de la page et injecte des blocs de traduction propres dans les conteneurs parents. Le format de la mise en page reste intact."
+            },
+            ja: {
+                h2: "DeepL API (最高品質)",
+                p: "Inline Translatorはページの構造的要素を自動的に検出し、親コンテナ内にクリーンな翻訳ブロックを挿入します。レイアウトの書式設定は完全にそのまま維持されます。"
+            },
+            de: {
+                h2: "DeepL API (beste Qualität)",
+                p: "Inline Translator erkennt automatisch strukturelle Elemente der Seite und fügt saubere Übersetzungsblöcke in übergeordnete Container ein. Die Formatierung des Layouts bleibt vollständig erhalten."
+            },
+            zh: {
+                h2: "DeepL API (最佳质量)",
+                p: "Inline Translator 自动检测页面结构元素，并在父容器中注入干净的翻译块。布局格式完全保持原样。"
+            }
+        };
+
+        function switchLanguage(lang, element) {
+            // Remove active status from all chips
+            document.querySelectorAll('.chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+
+            const h2Trans = document.getElementById('trans-h2');
+            const pTrans = document.getElementById('trans-p');
+            const demoH2 = document.getElementById('demo-h2');
+            const demoP = document.getElementById('demo-p');
+
+            if (lang === 'original') {
+                h2Trans.innerHTML = '';
+                pTrans.innerHTML = '';
+                demoH2.classList.remove('translated-parent');
+                demoP.classList.remove('translated-parent');
+            } else {
+                demoH2.classList.add('translated-parent');
+                demoP.classList.add('translated-parent');
+
+                // Render dynamic translation segments inside spans mimicking the extension architecture
+                h2Trans.innerHTML = `<span class="demo-translation-title">${translations[lang].h2}</span>`;
+                pTrans.innerHTML = `<span class="demo-translation">${translations[lang].p}</span>`;
+            }
+        }
+
+        // Float Toast Simulator
+        function triggerSimulatedToast(type) {
+            const container = document.getElementById('simulated-toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'simulated-toast';
+
+            const indicatorClass = type === 'success' ? 'indicator-success' : 'indicator-error';
+            const message = type === 'success' ? 'Page translated successfully.' : 'Translation failed: fetch to failed';
+
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <span class="toast-indicator ${indicatorClass}"></span>
+                    <span>${message}</span>
+                </div>
+                <span class="toast-close" onclick="closeSimulatedToast(this)">&times;</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+
+            // Automatically dismiss after 4 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 350);
+                }
+            }, 4000);
+        }
+
+        function closeSimulatedToast(element) {
+            const toast = element.closest('.simulated-toast');
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 350);
+        }
+
+    </script>
+</body>
+
+</html>
